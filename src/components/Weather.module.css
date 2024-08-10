@@ -70,6 +70,13 @@
     justify-content: center;
     align-items: center;
 }
+.weatherIconBox {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    border-radius: 1rem;
+}
 
 .weatherItem img {
     width: 2rem;
@@ -103,6 +110,10 @@
     .containerBox span,.containerBox p {
         font-size: 1.2rem;
     }
+    .weatherIconBox img {
+        width: 3.6rem;
+        height: 3.6rem;
+    }
 }
 @media (max-width: 360px) {
     .airConditions h2 {
@@ -113,9 +124,5 @@
     }
     .weatherDetails p {
         font-size: 0.7rem;
-    }
-    .weatherItem img {
-        width: 1.5rem;
-        height: 1.5rem;
     }
 }

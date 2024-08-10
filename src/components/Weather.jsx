@@ -43,7 +43,7 @@ function Weather({ weather, loading, error }) {
                             <h3 style={{display : "inline"}}>Real Feel </h3>
                             <span style={{fontSize : "1.2rem"}}>{weather.main.feels_like.toFixed(0)} °C</span> 
                         </div>
-                        <div>
+                        <div className={styles.weatherIconBox}>
                             <img src={weatherIcon} alt={weather.weather[0].main} />
                             <p>{localTime}</p>
                             <span style={{fontSize : "1.2rem"}}>{`${dateString}-${getMonthName(monthString)}`}</span>  
