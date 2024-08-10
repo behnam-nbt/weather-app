@@ -17,10 +17,10 @@ function TodayForecast({ forecast }) {
 
                     return (
                         <div key={index} className={styles.forecastItem}>
-                            <p style={{color : "#b7b7b7"}}>{dateString}</p>
                             <p>{timeString}</p>
                             <img src={getWeatherIcon(data.weather[0].description)} alt={forecast.list[0].weather[0].description} />
                             <p>{data.main.temp.toFixed(0)} °C</p>
+                            <p style={{color : "#b7b7b7", fontSize : "0.9rem"}}>{dateString}</p>
                         </div>
                     );
                 })}

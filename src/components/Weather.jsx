@@ -46,7 +46,7 @@ function Weather({ weather, loading, error }) {
                         <div>
                             <img src={weatherIcon} alt={weather.weather[0].main} />
                             <p>{localTime}</p>
-                            <span style={{fontSize : "1.2rem"}}>{`${dateString}/${getMonthName(monthString)}`}</span>  
+                            <span style={{fontSize : "1.2rem"}}>{`${dateString}-${getMonthName(monthString)}`}</span>  
                         </div>
                     </>
                 )}
