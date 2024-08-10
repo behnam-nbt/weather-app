@@ -73,3 +73,28 @@ export function translateWeatherDescription(description) {
             return description; // Fallback description
     }
 }
+export function getTodayForecast(forecast) {
+    const today = new Date().toLocaleDateString(); // Get today's date as a string
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowDateString = tomorrow.toLocaleDateString();
+
+    // Filter forecast data for today
+    let todayForecast = forecast.list.filter((item) => {
+        const forecastDate = new Date(item.dt * 1000).toLocaleDateString();
+        return forecastDate === today;
+    });
+
+    // If there are missing times, add the corresponding times from tomorrow
+    if (todayForecast.length < 8) {
+        const tomorrowForecast = forecast.list.filter((item) => {
+            const forecastDate = new Date(item.dt * 1000).toLocaleDateString();
+            return forecastDate === tomorrowDateString;
+        });
+
+        // Fill in the missing times with tomorrow's forecast data
+        todayForecast = todayForecast.concat(tomorrowForecast.slice(0, 8 - todayForecast.length));
+    }
+
+    return todayForecast;
+}

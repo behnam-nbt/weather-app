@@ -10,16 +10,16 @@ import Error from '../components/Error';
 import Weather from '../components/Weather';
 import Forecast from '../components/Forecast';
 import TodayForecast from '../components/TodayForecast';
-import AirConditions from '../components/AirConditions';
 import Footer from '../components/Footer';
+import MainLoader from '../components/MainLoader';
 
 function MainPage() {
     const [search, setSearch] = useState('');
     const [error, setError] = useState('');
     const dispatch = useDispatch();
-    const { weather, loading } = useSelector(state => state.weather);
-    const { forecast } = useSelector(state => state.forecast);
-    
+    const { weather, loading: weatherLoading } = useSelector(state => state.weather);
+    const { forecast, loading: forecastLoading } = useSelector(state => state.forecast);
+
     const defaultCity = 'New York';
 
     useEffect(() => {
@@ -85,21 +85,24 @@ function MainPage() {
     };
 
     return (
-        <div className={styles.weatherContainer}>
-            <Header
-                search={search}
-                setSearch={setSearch}
-                dispatch={dispatch}
-                locationHandler={locationHandler}
-                setError={setError}
-                onSearchSubmit={handleSearchSubmit} // Add this prop to handle search submit
-            />
-            {error && <Error error={error} setError={setError} closeError={closeError} />}
-            {weather && !error && <Weather weather={weather} loading={loading} />}
-            {forecast && !error && <TodayForecast forecast={forecast} />}
-            {forecast && !error && <Forecast forecast={forecast} />}
-            {weather && forecast && !error && <Footer />}
-        </div>
+        <>
+            {(weatherLoading || forecastLoading) && <MainLoader />}
+            <div className={styles.weatherContainer}>
+                <Header
+                    search={search}
+                    setSearch={setSearch}
+                    dispatch={dispatch}
+                    locationHandler={locationHandler}
+                    setError={setError}
+                    onSearchSubmit={handleSearchSubmit}
+                />
+                {error && <Error error={error} setError={setError} closeError={closeError} />}
+                {weather && !error && !weatherLoading && <Weather weather={weather} />}
+                {forecast && !error && !forecastLoading && <TodayForecast forecast={forecast} />}
+                {forecast && !error && !forecastLoading && <Forecast forecast={forecast} />}
+                {weather && forecast && !error && !weatherLoading && !forecastLoading && <Footer />}
+            </div>
+        </>
     );
 }
 
