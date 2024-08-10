@@ -2,6 +2,7 @@
     width: 100%;
     border-radius: 2rem;
     padding: 1rem;
+    position: relative;
 }
 .forecastContainer h2,.todayForecastContainer h2 {
     color: white;
@@ -18,7 +19,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
 }
-.forecastItem,.forecastItem {
+.forecastItem,.todayForecastItem {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,16 +29,48 @@
     background-color: rgb(58, 66, 68);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.forecastItem img,.forecastItem img {
+.forecastItem img,.todayForecastItem img {
     width: 50px;
     height: 50px;   
 }
-.forecastItem p,.forecastItem p {
+.forecastItem p,.todayForecastItem p {
     color: white;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     margin-top: 1rem;
 }
+
+.navigationContainer {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: 2rem; /* Position above the slider */
+    right : 5rem;
+}
+.navigationContainer img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.customPrev,
+.customNext {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.customPrev::after,.customPrev::before,
+.customNext,.customNext::after,.customNext::before {
+    color: #fff;
+    content: none!important;
+} 
 
 @media(max-width : 480px) {
     .forecastGrid,.todayForecastGrid {
