@@ -40,12 +40,6 @@ export const getWeatherIcon = (weatherMain) => {
     }
 };
 
-export function getDayOfWeek(dt) {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const date = new Date(dt * 1000); // Convert Unix timestamp to JavaScript date
-    return days[date.getDay()];
-}
-
 export function translateWeatherDescription(description) {
     switch (description.toLowerCase()) {
         case 'clear':
@@ -73,6 +67,14 @@ export function translateWeatherDescription(description) {
             return description; // Fallback description
     }
 }
+
+export function getDayOfWeek(dt) {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const date = new Date(dt * 1000); // Convert Unix timestamp to JavaScript date
+    return days[date.getDay()];
+}
+
+
 export function getTodayForecast(forecast) {
     const today = new Date().toLocaleDateString(); // Get today's date as a string
     const tomorrow = new Date();
@@ -97,4 +99,14 @@ export function getTodayForecast(forecast) {
     }
 
     return todayForecast;
+}
+
+export function getMonthName(monthNumber) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[monthNumber - 1].slice(0, 3); // Get the first three letters of the month name
+}
+
+export const dateToLocaleString = (dt) => {
+    const date = new Date(dt * 1000);
+    return date.toLocaleString([], { month: '2-digit',day: '2-digit'});
 }

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Weather.module.css';
-import { getWeatherIcon, translateWeatherDescription } from '../helper/helper';
+import { getMonthName, getWeatherIcon, translateWeatherDescription } from '../helper/helper';
 import Loader from './Loader';
 import AirConditions from '../components/AirConditions';
 
 function Weather({ weather, loading, error }) {
     const weatherIcon = getWeatherIcon(weather.weather[0].description);
     const [localTime, setLocalTime] = useState('');
+
+    const date = new Date(weather.dt * 1000); // Convert Unix timestamp to JavaScript date
+    const monthString = date.toLocaleDateString([], { month: '2-digit'}); // Format date as MM/DD
+    const dateString = date.toLocaleDateString([], { day: '2-digit' }); // Format date as MM/DD
 
     // Function to calculate and update the local time
     const updateLocalTime = () => {
@@ -41,7 +45,8 @@ function Weather({ weather, loading, error }) {
                         </div>
                         <div>
                             <img src={weatherIcon} alt={weather.weather[0].main} />
-                            <p>{localTime}</p>  
+                            <p>{localTime}</p>
+                            <span style={{fontSize : "1.2rem"}}>{`${dateString}/${getMonthName(monthString)}`}</span>  
                         </div>
                     </>
                 )}

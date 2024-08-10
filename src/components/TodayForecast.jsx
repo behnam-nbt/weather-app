@@ -8,7 +8,7 @@ function TodayForecast({ forecast }) {
 
     return (
         <div className={styles.todayForecastContainer}>
-            <h2>Today's Forecast</h2>
+            <h2>24-hour Forecast</h2>
             <div className={styles.todayForecastGrid}>
                 {todayForecast.map((data, index) => {
                     const date = new Date(data.dt * 1000);

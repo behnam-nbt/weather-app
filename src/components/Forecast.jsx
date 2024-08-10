@@ -1,5 +1,5 @@
 import styles from './Forecast.module.css';
-import { getDayOfWeek } from '../helper/helper';
+import { dateToLocaleString, getDayOfWeek } from '../helper/helper';
 import { getWeatherIcon } from '../helper/helper';
 
 function Forecast({ forecast }) {
@@ -9,6 +9,7 @@ function Forecast({ forecast }) {
 
         if (!acc[day]) {
             acc[day] = {
+                dt: dateToLocaleString(current.dt), // Get the time
                 temp: current.main.temp,
                 description: current.weather[0].description,
                 wind: current.wind.speed,
@@ -28,12 +29,9 @@ function Forecast({ forecast }) {
             <div className={styles.forecastGrid}>
                 {Object.entries(dailyForecast).map(([date, data], index) => (
                     <div key={index} className={styles.forecastItem}>
-                        <p>{date}</p>
-                        {/* <p>{data.description}</p> */}
+                        <p>{date}-<span style={{color : "#b7b7b7"}}>{data.dt}</span></p>
                         <img src={data.icon} alt={data.description} />
                         <p>{data.temp.toFixed(0)} °C</p>
-                        {/* <p>Wind: {data.wind} m/s</p> */}
-                        {/* <p>Humidity: {data.humidity}%</p> */}
                     </div>
                 ))}
             </div>
