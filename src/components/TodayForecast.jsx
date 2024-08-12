@@ -4,11 +4,9 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css'; // Import Swiper styles
 import 'swiper/css/navigation'; // Import Swiper navigation styles
 import styles from './Forecast.module.css';
-import { getWeatherIcon } from '../helper/helper';
-import { getTodayForecast } from '../helper/helper';
-import LeftArrow from '/images/left-arrow.png'
-import RightArrow from '/images/arrow-right.png'
-
+import { getWeatherIcon, getTodayForecast } from '../helper/helper';
+import LeftArrow from '/images/left-arrow.png';
+import RightArrow from '/images/arrow-right.png';
 
 function TodayForecast({ forecast }) {
     const todayForecast = getTodayForecast(forecast);
@@ -17,15 +15,18 @@ function TodayForecast({ forecast }) {
         <div className={styles.todayForecastContainer}>
             <h2>24-hour Forecast</h2>
             <div className={styles.navigationContainer}>
-                <button className={`swiper-button-next ${styles.customNext}`}><img src={RightArrow} alt='' /></button>
-                <button className={`swiper-button-prev ${styles.customPrev}`}><img src={LeftArrow} alt='' /></button>
+                <button className={`swiper-button-prev ${styles.customPrev}`} aria-label="Previous Slide">
+                    <img src={LeftArrow} alt="Previous Slide" />
+                </button>
+                <button className={`swiper-button-next ${styles.customNext}`} aria-label="Next Slide">
+                    <img src={RightArrow} alt="Next Slide" />
+                </button>
             </div>
             <Swiper
                 spaceBetween={10}
                 slidesPerView={1}
-                navigation={{ prevEl: '.swiper-button-prev', nextEl: '.swiper-button-next' }}
+                navigation={{ prevEl: `.${styles.customPrev}`, nextEl: `.${styles.customNext}` }}
                 modules={[Navigation]}
-                pagination={{ clickable: true }}
                 breakpoints={{
                     640: {
                         slidesPerView: 1,
@@ -47,7 +48,7 @@ function TodayForecast({ forecast }) {
                         <SwiperSlide key={index}>
                             <div className={styles.todayForecastItem}>
                                 <p>{timeString}</p>
-                                <img src={getWeatherIcon(data.weather[0].description)} alt={forecast.list[0].weather[0].description} />
+                                <img src={getWeatherIcon(data.weather[0].description)} alt={data.weather[0].description} />
                                 <p>{data.main.temp.toFixed(0)} °C</p>
                                 <p style={{ color: "#b7b7b7", fontSize: "0.9rem" }}>{dateString}</p>
                             </div>
