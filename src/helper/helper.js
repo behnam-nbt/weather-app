@@ -25,7 +25,9 @@ export const getWeatherIcon = (weatherMain) => {
             return drizzle;
         case 'rain':
         case 'sleet':
+        case 'moderate rain':
         case 'freezing rain':
+        case 'heavy intensity rain':
             return rain;
         case 'thunderstorm':
             return thunderstorm;
@@ -56,7 +58,9 @@ export function translateWeatherDescription(description) {
         case 'drizzle':
             return 'Light Rain';
         case 'rain':
-            return 'Rain';
+        case 'heavy intensity rain':
+        case 'moderate rain':
+            return 'Rainy';
         case 'thunderstorm':
             return 'Thunderstorm';
         case 'snow':
