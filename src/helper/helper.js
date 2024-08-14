@@ -19,22 +19,27 @@ export const getWeatherIcon = (weatherMain, sunset, forecastDate, sunrise) => {
     let afterSunset = false;
     let beforeSunrise = false;
 
-    if (sunset instanceof Date && !isNaN(sunset.getTime()) && forecastDate instanceof Date && sunrise instanceof Date) {
-        // Extract hours and minutes for comparison
-        const forecastHours = forecastDate.getHours();
-        const forecastMinutes = forecastDate.getMinutes();
+    if (
+        sunset instanceof Date &&
+        !isNaN(sunset.getTime()) &&
+        forecastDate instanceof Date &&
+        sunrise instanceof Date
+    ) {
+        // Convert times to UTC for accurate comparison across different time zones
+        const forecastHours = forecastDate.getUTCHours();
+        const forecastMinutes = forecastDate.getUTCMinutes();
 
-        const sunsetHours = sunset.getHours();
-        const sunsetMinutes = sunset.getMinutes();
+        const sunsetHours = sunset.getUTCHours();
+        const sunsetMinutes = sunset.getUTCMinutes();
 
-        const sunriseHours = sunrise.getHours();
-        const sunriseMinutes = sunrise.getMinutes();
+        const sunriseHours = sunrise.getUTCHours();
+        const sunriseMinutes = sunrise.getUTCMinutes();
 
-        // Check if the forecast time is after sunset of the previous day or before sunrise of the same day
+        // Check if the forecast time is after sunset or before sunrise in UTC time
         afterSunset = (forecastHours > sunsetHours) || (forecastHours === sunsetHours && forecastMinutes > sunsetMinutes);
         beforeSunrise = (forecastHours < sunriseHours) || (forecastHours === sunriseHours && forecastMinutes < sunriseMinutes);
 
-        // If the forecast time is after sunset of the previous day OR before sunrise of the current day
+        // Consider early morning hours (after midnight until 5 AM) as night
         if (forecastHours >= 0 && forecastHours <= 5) {
             afterSunset = true;
         }
@@ -86,6 +91,7 @@ export const getWeatherIcon = (weatherMain, sunset, forecastDate, sunrise) => {
             return afterSunset || beforeSunrise ? moon : sun; // Fallback icon
     }
 };
+
 
 
 

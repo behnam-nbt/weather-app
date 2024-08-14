@@ -8,7 +8,11 @@ import { getWeatherIcon, getTodayForecast } from '../helper/helper';
 import LeftArrow from '/images/left-arrow.png';
 import RightArrow from '/images/arrow-right.png';
 
-function TodayForecast({ forecast,weather }) {
+function TodayForecast({ forecast, weather }) {
+    if (!weather || !weather.sys) {
+        return <div>Error: Unable to retrieve weather data.</div>;
+    }
+
     const todayForecast = getTodayForecast(forecast);
     const sunset = new Date(weather.sys.sunset * 1000);
     const sunrise = new Date(weather.sys.sunrise * 1000);
@@ -50,7 +54,10 @@ function TodayForecast({ forecast,weather }) {
                         <SwiperSlide key={index}>
                             <div className={styles.todayForecastItem}>
                                 <p>{timeString}</p>
-                                <img src={getWeatherIcon(data.weather[0].description,sunset,date,sunrise)} alt={data.weather[0].description} />
+                                <img
+                                    src={getWeatherIcon(data.weather[0].description, sunset, date, sunrise)}
+                                    alt={data.weather[0].description}
+                                />
                                 <p>{data.main.temp.toFixed(0)} °C</p>
                                 <p style={{ color: "#b7b7b7", fontSize: "0.9rem" }}>{dateString}</p>
                             </div>
