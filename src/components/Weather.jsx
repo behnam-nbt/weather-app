@@ -5,7 +5,8 @@ import Loader from './Loader';
 import AirConditions from '../components/AirConditions';
 
 function Weather({ weather, loading, error }) {
-    const weatherIcon = getWeatherIcon(weather.weather[0].description);
+    const sunset = new Date(weather.sys.sunset);
+    const weatherIcon = getWeatherIcon(weather.weather[0].description,sunset);
     const [localTime, setLocalTime] = useState('');
 
     const date = new Date(weather.dt * 1000); // Convert Unix timestamp to JavaScript date

@@ -1,46 +1,93 @@
 import sun from '/images/sun.png';
 import fewClouds from '/images/cloudy-day.png';
+import cloudyNight from '/images/cloudy-night.png';
 import scatteredClouds from '/images/partly-cloudy.png';
 import brokenClouds from '/images/cloudy.png';
+import mostlyCloudy from '/images/mostly-cloudy.png';
 import overcastClouds from '/images/overcast.png';
 import drizzle from '/images/drizzle.png';
+import nightDrizzle from '/images/night-drizzle.png';
 import rain from '/images/rain.png';
 import thunderstorm from '/images/thunderstorm.png';
+import thunderstormLightRain from '/images/thunderstorm-light-rain.png';
 import snow from '/images/snow.png';
 import mist from '/images/mist.png';
+import moon from '/images/moon.png';
 
-export const getWeatherIcon = (weatherMain) => {
+
+export const getWeatherIcon = (weatherMain, sunset, forecastDate, sunrise) => {
+    let afterSunset = false;
+    let beforeSunrise = false;
+
+    if (sunset instanceof Date && !isNaN(sunset.getTime()) && forecastDate instanceof Date && sunrise instanceof Date) {
+        // Extract hours and minutes for comparison
+        const forecastHours = forecastDate.getHours();
+        const forecastMinutes = forecastDate.getMinutes();
+
+        const sunsetHours = sunset.getHours();
+        const sunsetMinutes = sunset.getMinutes();
+
+        const sunriseHours = sunrise.getHours();
+        const sunriseMinutes = sunrise.getMinutes();
+
+        // Check if the forecast time is after sunset of the previous day or before sunrise of the same day
+        afterSunset = (forecastHours > sunsetHours) || (forecastHours === sunsetHours && forecastMinutes > sunsetMinutes);
+        beforeSunrise = (forecastHours < sunriseHours) || (forecastHours === sunriseHours && forecastMinutes < sunriseMinutes);
+
+        // If the forecast time is after sunset of the previous day OR before sunrise of the current day
+        if (forecastHours >= 0 && forecastHours <= 5) {
+            afterSunset = true;
+        }
+    }
+
     switch (weatherMain.toLowerCase()) {
         case 'clear':
-            return sun;
+        case 'clear sky':
+            return afterSunset || beforeSunrise ? moon : sun;
+
         case 'few clouds':
-            return fewClouds;
+            return afterSunset || beforeSunrise ? cloudyNight : fewClouds;
+
         case 'scattered clouds':
-            return scatteredClouds;
+            return afterSunset || beforeSunrise ? cloudyNight : scatteredClouds;
+
         case 'broken clouds':
-            return brokenClouds;
+            return afterSunset || beforeSunrise ? mostlyCloudy : brokenClouds;
+
         case 'overcast clouds':
             return overcastClouds;
+
         case 'drizzle':
-            return drizzle;
+            return afterSunset || beforeSunrise ? nightDrizzle : drizzle;
+
         case 'rain':
+        case 'light rain':
         case 'sleet':
         case 'moderate rain':
         case 'freezing rain':
         case 'heavy intensity rain':
             return rain;
+
         case 'thunderstorm':
             return thunderstorm;
+
+        case "thunderstorm with light rain":
+            return thunderstormLightRain;
+
         case 'snow':
             return snow;
+
         case 'mist':
         case 'fog':
         case 'haze':
             return mist;
+
         default:
-            return sun; // Fallback icon
+            return afterSunset || beforeSunrise ? moon : sun; // Fallback icon
     }
 };
+
+
 
 export function translateWeatherDescription(description) {
     switch (description.toLowerCase()) {
@@ -112,5 +159,5 @@ export function getMonthName(monthNumber) {
 
 export const dateToLocaleString = (dt) => {
     const date = new Date(dt * 1000);
-    return date.toLocaleString([], { month: '2-digit',day: '2-digit'});
+    return date.toLocaleString([], { month: '2-digit', day: '2-digit' });
 }

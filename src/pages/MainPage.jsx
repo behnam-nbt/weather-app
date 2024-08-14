@@ -19,7 +19,6 @@ function MainPage() {
     const dispatch = useDispatch();
     const { weather, loading: weatherLoading } = useSelector(state => state.weather);
     const { forecast, loading: forecastLoading } = useSelector(state => state.forecast);
-
     const defaultCity = 'New York';
 
     useEffect(() => {
@@ -98,7 +97,7 @@ function MainPage() {
                 />
                 {error && <Error error={error} setError={setError} closeError={closeError} />}
                 {weather && !error && !weatherLoading && <Weather weather={weather} />}
-                {forecast && !error && !forecastLoading && <TodayForecast forecast={forecast} />}
+                {forecast && !error && !forecastLoading && <TodayForecast forecast={forecast} weather={weather} />}
                 {forecast && !error && !forecastLoading && <Forecast forecast={forecast} />}
                 {weather && forecast && !error && !weatherLoading && !forecastLoading && <Footer />}
             </div>

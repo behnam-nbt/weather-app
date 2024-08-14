@@ -14,10 +14,9 @@ function Forecast({ forecast }) {
                 description: current.weather[0].description,
                 wind: current.wind.speed,
                 humidity: current.main.humidity,
-                icon: getWeatherIcon(current.weather[0].description), // Get the weather icon
+                icon: getWeatherIcon(current.weather[0].description,null, new Date(), null), // Get the weather icon
             };
         } else {
-            // Optionally, aggregate data here (e.g., average temperature)
             acc[day].temp = (acc[day].temp + current.main.temp) / 2;
         }
 
