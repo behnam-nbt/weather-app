@@ -6,10 +6,7 @@ Welcome to WeatherApp, the ultimate weather forecasting app that provides real-t
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
 - [API Information](#api-information)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 - Real-time weather updates for any location
@@ -25,6 +22,8 @@ Welcome to WeatherApp, the ultimate weather forecasting app that provides real-t
 - **Swiper.js:** For the carousel in the 24-hour forecast
 - **CSS:** Styling of components
 - **ESLint:** Ensuring code quality
+- **Vercel:** Deployment platform for hosting the application with ease
+- **Axios:** For handling HTTP requests
 
 ## Installation
 
